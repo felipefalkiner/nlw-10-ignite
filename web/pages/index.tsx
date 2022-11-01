@@ -1,5 +1,11 @@
+import { Tweet } from "../components/Tweet";
+
 export default function Home() {
   return (
-    <h1>Hello Falk</h1>
+    <div>
+      <Tweet text="Meu Primeiro Tweet" />
+      <Tweet text="Meu Segundo Tweet" />
+      <Tweet text="Meu Terceiro Tweet" />
+    </div>
   )
 }
