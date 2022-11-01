@@ -1,0 +1,13 @@
+.expo
+
+./server/node_modules
+./server/node_modules/*
+
+./web/node_modules
+./web/node_modules/*
+
+./mobile/node_modules
+./mobile/node_modules/*
+
+./mobile-old/node_modules
+./mobile-old/node_modules/*
