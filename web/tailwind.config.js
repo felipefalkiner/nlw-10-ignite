@@ -8,6 +8,11 @@ module.exports = {
       fontFamily: {
         sans: 'Roboto, sans-serif'
       },
+
+      backgroundImage: {
+        app: 'url(/app-bg.png)'
+      },
+
       colors: {
 
         ignite: {
@@ -15,7 +20,8 @@ module.exports = {
         },
 
         yellow: {
-          500: "#F7DD43"
+          500: "#F7DD43",
+          700: "#E5CD3D"
         },
 
         gray: {
