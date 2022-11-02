@@ -104,6 +104,9 @@ export default function Home(props: HomeProps) {
   )
 }
 
+// implementar getStaticProps nas APIs para evitar sobrecarga no db
+// https://nextjs.org/docs/basic-features/data-fetching/get-static-props
+
 export const getServerSideProps = async () => {
 
   const [
