@@ -1,5 +1,7 @@
 interface HomeProps {
   poolCount: number;
+  guessCount: number;
+  userCount: number;
 }
 
 import Image from 'next/image';
@@ -7,6 +9,8 @@ import appPreviewImg from '../assets/app-nlw-copa-preview.png'
 import logoImg from '../assets/logo.svg'
 import usersAvatarExampleImg from '../assets/users-avatar-example.png'
 import iconCheckImg from '../assets/icon-check.svg'
+import { api } from '../lib/axios';
+
 
 export default function Home(props: HomeProps) {
   return (
@@ -21,7 +25,7 @@ export default function Home(props: HomeProps) {
         <div className='mt-10 flex items-center gap-2 '>
           <Image src={usersAvatarExampleImg} alt="Fotos de pessoas que estão na aplicação" />
           <strong className='text-gray-100 text-xl'>
-            <span className='text-ignite-500'>+12.592</span> pessoas já estão usando
+            <span className='text-ignite-500'>+{props.userCount}</span> pessoas já estão usando
           </strong>
         </div>
 
@@ -46,7 +50,7 @@ export default function Home(props: HomeProps) {
           <div className='flex items-center gap-6'>
             <Image src={iconCheckImg} alt="" />
               <div className='flex flex-col'>
-                <span className='font-bold text-2xl'>+2{props.poolCount}</span>
+                <span className='font-bold text-2xl'>+{props.poolCount}</span>
                 <span>Bolões criados</span>
               </div>
           </div>
@@ -56,7 +60,7 @@ export default function Home(props: HomeProps) {
           <div className='flex items-center gap-6'>
             <Image src={iconCheckImg} alt="" />
               <div className='flex flex-col'>
-                <span className='font-bold text-2xl'>+192.847</span>
+                <span className='font-bold text-2xl'>+{props.guessCount}</span>
                 <span>Palpites enviados</span>
               </div>
           </div>
@@ -74,13 +78,21 @@ export default function Home(props: HomeProps) {
 }
 
 export const getServerSideProps = async () => {
-  const response = await fetch('http://localhost:3333/pools/count')
-  const data = await response.json()
-  
-  console.log(data)
+
+  const [
+      poolCountResponse,
+      guessCountResponse,
+      userCountResponse] = await Promise.all([
+    api.get('pools/count'),
+    api.get('guesses/count'),
+    api.get('users/count')
+  ])
+
   return {
     props: {
-      poolCount: data.count,
+      poolCount: poolCountResponse.data.count,
+      guessCount: guessCountResponse.data.count,
+      userCount: userCountResponse.data.count,
     }
   }
 }
