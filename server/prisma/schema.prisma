@@ -69,4 +69,6 @@ model Guess {
 
   gameId        String
   participantId String
+
+  @@unique([participantId, gameId])
 }
