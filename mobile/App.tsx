@@ -3,12 +3,10 @@ import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@
 
 import { AuthContextProvider } from './contexts/AuthContext';
 
-import { SignIn } from './src/screens/SignIn';
-import { New } from './src/screens/New';
+import { Pools } from './src/screens/Pools';
 import { Loading } from './src/components/Loading';
 
 import { THEME } from './src/styles/theme';
-import { Find } from './src/screens/Find';
 
 export default function App() {
 
@@ -24,7 +22,7 @@ export default function App() {
         />
         
         {
-          fontsLoaded ? <Find /> : <Loading />
+          fontsLoaded ? <Pools /> : <Loading />
         }
       </AuthContextProvider>
     </NativeBaseProvider>
