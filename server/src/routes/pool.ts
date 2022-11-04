@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify';
 import ShortUniqueId from 'short-unique-id';
 import { prisma } from '../lib/primsa'
 import { z } from 'zod'
+import { authenticate } from '../plugins/authenticate';
 
 export async function poolRoutes(fastify: FastifyInstance) {
     fastify.get('/pools/count', async () => {
@@ -20,7 +21,7 @@ export async function poolRoutes(fastify: FastifyInstance) {
 
         const generate = new ShortUniqueId({length: 6})
         const code = String(generate()).toUpperCase();
-        
+
         try {
             await request.jwtVerify()
 
@@ -50,4 +51,48 @@ export async function poolRoutes(fastify: FastifyInstance) {
 
         // return { title }
     })
+
+    fastify.post('pools/:id/join',
+        {onRequest: [authenticate]},
+        async (request, reply) => {
+            const joinPoolBody = z.object({
+                code: z.string(),
+            })
+
+            const { code } = joinPoolBody.parse(request.body);
+
+            const pool = await prisma.pool.findUnique({
+                where: {
+                    code,
+                },
+                include: {
+                    participants: {
+                        where: {
+                            userId: request.user.sub,
+                        }
+                    }
+                }
+            })
+
+            if (!pool) {
+                return reply.status(400).send({
+                    message: 'Bolão não encontrado!'
+                })
+            }
+
+            if (pool.participants.length > 0) {
+                return reply.status(400).send({
+                    message: 'Você já entrou nesse bolão!'
+                })
+            }
+
+            await prisma.participant.create({
+                data: {
+                    poolId: pool.id,
+                    userId: request.user.sub,
+                }
+            })
+
+            return reply.status(201).send()
+        })
 }
