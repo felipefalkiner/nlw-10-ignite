@@ -8,6 +8,7 @@ import { New } from './src/screens/New';
 import { Loading } from './src/components/Loading';
 
 import { THEME } from './src/styles/theme';
+import { Find } from './src/screens/Find';
 
 export default function App() {
 
@@ -23,7 +24,7 @@ export default function App() {
         />
         
         {
-          fontsLoaded ? <New /> : <Loading />
+          fontsLoaded ? <Find /> : <Loading />
         }
       </AuthContextProvider>
     </NativeBaseProvider>
