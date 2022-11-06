@@ -1,4 +1,5 @@
 import { HStack, useToast, VStack } from "native-base";
+import { Share } from 'react-native';
 import { useRoute } from "@react-navigation/native";
 import { useState, useEffect } from 'react'
 
@@ -46,6 +47,12 @@ export function Details(){
         }
     }
 
+    async function handleCodeShare() {
+        await Share.share({
+            message: poolDetails.code,
+        });
+    }
+
     useEffect(() => {
         fetchPoolDetails();
     }, [id])
@@ -59,9 +66,10 @@ export function Details(){
     return(
         <VStack flex={1} bgColor="gray.900">
             <Header
-                title="Título Não Integrado"
+                title={poolDetails.title}
                 showBackButton
                 showShareButton
+                onShare={handleCodeShare}
             />
 
             {   
@@ -73,7 +81,6 @@ export function Details(){
                         <Option title="Seus palpites" isSelected={optionSelected === 'guesses'} onPress={() => setOptionSelected('guesses')} />
                         <Option title="Ranking do Grupo" isSelected={optionSelected === 'ranking'} onPress={() => setOptionSelected('ranking')} />
                     </HStack>
-                    
 
                 </VStack>
                 :
