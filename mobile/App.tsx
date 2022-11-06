@@ -3,10 +3,10 @@ import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@
 
 import { AuthContextProvider } from './contexts/AuthContext';
 
-import { SignIn } from './src/screens/SignIn';
 import { Loading } from './src/components/Loading';
 
 import { THEME } from './src/styles/theme';
+import { Routes } from './src/routes';
 
 export default function App() {
 
@@ -22,7 +22,7 @@ export default function App() {
         />
         
         {
-          fontsLoaded ? <SignIn /> : <Loading />
+          fontsLoaded ? <Routes /> : <Loading />
         }
       </AuthContextProvider>
     </NativeBaseProvider>
