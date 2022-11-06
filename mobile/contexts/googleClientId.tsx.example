@@ -1,7 +1,0 @@
-// to use this, insert your Google ClientID below
-// and rename this file to googleClientId.tsx
-
-export function googleClientId() {
-    const clientId = 'your-google-clientID-here';
-    return clientId;    
-}
