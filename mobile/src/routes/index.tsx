@@ -1,13 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
+
+import { useAuth } from '../hooks/useAuth'
+
 import { AppRoutes } from './app.routes';
 import { SignIn } from '../screens/SignIn';
 
 export function Routes(){
     return(
         <NavigationContainer>
-            <SignIn
-                
-            />
+            <SignIn />
         </NavigationContainer>
     );
 }
