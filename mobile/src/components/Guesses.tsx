@@ -4,13 +4,15 @@ import { useState, useEffect } from 'react';
 import { api } from '../../services/api'
 
 import { Game, GameProps } from '../components/Game'
+import { EmptyMyPoolList } from './EmptyMyPoolList';
 import { Loading } from './Loading';
 
 interface Props {
   poolId: string;
+  code: string;
 }
 
-export function Guesses({ poolId }: Props) {
+export function Guesses({ poolId, code }: Props) {
 
   const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState<GameProps[]>([]);
@@ -84,7 +86,7 @@ export function Guesses({ poolId }: Props) {
 
   return (
     <FlatList
-      data={games}
+      data={[]}
       keyExtractor={item => item.id}
       renderItem={({ item }) => (
         <Game
@@ -94,6 +96,12 @@ export function Guesses({ poolId }: Props) {
           onGuessConfirm={() => {handleGuessConfirm(item.id)}}
         />
       )}
+      _contentContainerStyle={{pb: 100}}
+      ListEmptyComponent={() => 
+        <EmptyMyPoolList
+          code={code}
+        />
+      }
     />
   )
 }
